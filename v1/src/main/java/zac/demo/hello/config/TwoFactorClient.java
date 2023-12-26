@@ -6,8 +6,17 @@ import com.duosecurity.model.HealthCheckResponse;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import zac.demo.hello.properties.ZacProperties;
 import zac.demo.hello.security.CustomFilter;
 
+@Configuration(proxyBeanMethods = false)
+@PropertySource("classpath:zach.properties")
+@ConditionalOnProperty(name = "zac.enabled", matchIfMissing = true)
+@EnableConfigurationProperties(ZacProperties.class)
 public class TwoFactorClient {
     // Private static instance of the class, initialized lazily
     private static Client instance;
